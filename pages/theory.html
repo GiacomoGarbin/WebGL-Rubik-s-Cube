@@ -1,0 +1,457 @@
+﻿<html>
+<head>
+	<title>Rubik's Cube | Theory</title>
+	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/ui.css">
+</head>
+<body>
+	<div id="control-panel">
+		<table class="frame">
+			<tr>
+				<td class="header">
+					<table class="project">
+						<tr class="row1">
+							<td><i class="fa fa-cube"></i>Il Cubo di Rubik</td>
+						</tr>
+						<tr class="row2">
+							<td>
+								<span class="normal">di</span> Giacomo Garbin
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table class="button-group">
+						<tr>
+							<td>
+								<a href="./manual.html" class="button">
+									<div class="button user-manual">User Manual</div>
+								</a>
+							</td>
+							<td>
+								<a href="./rubik.html" class="button">
+									<div class="button application">Application</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="title"><div>Theory</div></td>
+			</tr>
+			<tr>
+				<td class="index">
+					Indice
+					<ul class="index">
+						<li><a href="#introduction"><i class="fa fa-square"></i> Introduzione</a></li>
+						<li><a href="#nomenclature"><i class="fa fa-square"></i> Nomenclatura</a></li>
+						<li><a href="#representation"><i class="fa fa-square"></i> Rappresentazione</a></li>
+						<li><a href="#rotation"><i class="fa fa-square"></i> Rotazioni</a></li>
+						<li><a href="#practically"><i class="fa fa-square"></i> In pratica</a></li>
+						<li><a href="#solver"><i class="fa fa-square"></i> Algoritmo Risolutivo</a></li>
+						<li><a href="#bibliography"><i class="fa fa-square"></i> Bibliografia</a></li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="footer">
+					<a href="../index.html"><i class="fa fa-arrow-left"></i> back to Index</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="textContainer" class="theory">
+		<h2 id="introduction">Introduzione</h2>
+		<p>Con questo progetto ci si è posti l'obiettivo di realizzare un modello virtuale del famoso rompicapo "il Cubo di Rubik". Il risultato ottenuto può essere osservato alla pagina <a href="rubik.html" class="button application">Application</a> e all'occorrenza è possibile consultare una breve guida sull'utilizzo dell'applicazione alla pagina <a href="manual.html" class="button user-manual">User Manual</a>. In questa pagina invece verranno discussi alcuni aspetti tecnici e realizzativi legati al progetto.</p>
+		<p>L'applicazione consente all'utente di replicare le manipolazioni che comunemente vengono eseguite da un giocatore su un cubo reale. Tra tutti i movimenti possibili del cubo, i soli di interesse per la soluzione del rompicapo - ossia il raggiungimento di quella particolare configurazione in cui le sei facce del cubo sono tutte monocolori - appartengono alla famiglia delle rotazioni e si distinguono in due categorie: le <strong>rotazioni del cubo</strong> lungo gli assi del sistema di riferimento cartesiano tridimensionale con l'origine posta al centro del cubo e le <strong>rotazioni delle facce</strong> del cubo lungo le direzioni individuate dalle rispettive normali alle sei facce.</p>
+		<p>Il modello tridimensionale del cubo è stato realizzato sfruttando le possibilità offerte dalla <strong>libreria grafica WebGL</strong>, la quale consente di mescolare elementi tipici di una pagina web ad elementi tipici delle applicazioni con grafica in tempo reale. Da <a href="http://en.wikipedia.org/wiki/WebGL#Support">en.wikipedia.org/wiki/WebGL#Support</a>: <i>WebGL is widely supported in modern browsers, however its availability is dependent on other factors like the GPU supporting it. The official WebGL website offers a simple <a href="http://get.webgl.org/">test page</a>.</i></p>
+		<h2 id="nomenclature">Nomenclatura</h2>
+		<p>Prima di discutere gli aspetti teorici e tecnici che caratterizzano l'applicazione frutto di questo progetto, occorre soffermarsi brevemente sull'oggetto al centro dello studio ideato da Ernő Rubik e in particolare introdurre la nomenclatura utilizzata in questa e nelle altre sezioni del progetto per identificare le diverse parti di cui il cubo è composto.</p>
+		<p>La nomenclatura nel seguito adottata riprende, con qualche variazione, quella utilizzata da André Warusfel nel libro Il Cubo di Rubik (si consulti la bibliografia per maggiori dettagli). Il volume descrive alcuni aspetti fondamentali del cubo ed espone un algoritmo risolutivo che come spiegato in seguito non viene implementato dall'applicazione.</p>
+		<p>
+			Il Cubo di Rubik è formato da ventisette cubi più piccoli (qui chiamati anche cubetti) che si differenziano in quattro tipologie (si veda anche la <span class="figure">Figura 1</span>):
+			<ul>
+				<li><strong>otto cubi vertice</strong>, posti agli otto angoli del cubo, ciascuno dei quali ha tre facce visibili ed altrettante nascoste</li>
+				<li><strong>dodici cubi spigolo</strong>, posti ognuno tra una coppia di cubi vertice, ciascuno dei quali ha due facce visibili e quattro nascoste</li>
+				<li><strong>sei cubi centrali</strong>, posti al centro delle facce del cubo, ciascuno dei quali ha una sola faccia visibile e le rimanenti nascoste</li>
+				<li><strong>un cubo "fantasma"</strong> (così detto poiché tale cubo non è presente nel cubo reale), posto al centro del cubo, che non presenta alcuna faccia visibile</li>
+			</ul>
+		</p>
+		<table class="figure">
+			<tr>
+				<td class="label top">cubi vertice</td>
+				<td class="label top">cubi spigolo</td>
+				<td class="label top">cubi centrali</td>
+			</tr>
+			<tr>
+				<td class="image"><img src="../img/theory1a.png" /></td>
+				<td class="image"><img src="../img/theory1b.png" /></td>
+				<td class="image"><img src="../img/theory1c.png" /></td>
+			</tr>
+			<tr>
+				<td colspan="3" class="label bottom"><span class="figure">Figura 1</span>: Le tre tipologie dei cubetti visibili.</td>
+			</tr>
+		</table>
+		<p>Le sei facce del cubo, indipendentemente dall'orientazione del cubo, possono essere identificate come illustrato nella <span class="figure">Figura 2</span>. I nomi delle facce verranno sovente abbreviati con la sola iniziale del nome, ad esempio si scriverà "R" per indicare la faccia a destra anziché "Right".</p>
+		<table class="figure">
+			<tr>
+				<td class="image"><img src="../img/theory2.png" /></td>
+			</tr>
+			<tr>
+				<td class="label bottom"><span class="figure">Figura 2</span>: Le sei facce del cubo.</td>
+			</tr>
+		</table>
+		<p>Ognuno dei ventisei cubetti visibili può essere identificato univocamente elencando le facce su cui esso compare. Ad esempio il cubo vertice che si trova nell'angolo di fronte, in alto, a destra appare sulle facce front, up, right e quindi può essere identificato dalla sigla FUR. Analogamente, il cubo spigolo che si trova dietro, a sinistra compare sulle facce back, left e quindi può essere identificato dalla sigla BL.</p>
+		<h2 id="representation">Rappresentazione</h2>
+		<p>Come anticipato, supponendo di posizionare il cubo al centro del sistema di riferimento cartesiano tridimensionale con gli assi e i rispettivi versi orientati come illustrato nella <span class="figure">Figura 3</span>, è possibile raggiungere ogni configurazione permessa dal cubo reale tramite delle semplici rotazioni dell'intero cubo o delle sei facce lungo gli assi x, y, z del sistema di riferimento.</p>
+		<table class="figure">
+			<tr>
+				<td class="image"><img src="../img/theory3.png" /></td>
+			</tr>
+			<tr>
+				<td class="label bottom"><span class="figure">Figura 3</span>: Il sistema di riferimento cartesiano tridimensionale.</td>
+			</tr>
+		</table>
+		<p>Per capire in quale modo queste rotazioni sono applicate al modello virtuale del cubo occorre innanzitutto osservare più da vicino la struttura con la quale il modello viene descritto all'interno dell'applicazione e quali sono le principali fasi che intercorrono nel passaggio dalla rappresentazione del modello tramite questa essenziale struttura, a quella molto più complessa renderizzata dal browser.</p>
+		<p>La <span class="figure">Figura 4</span> mostra, nell'ordine inverso rispetto a quello in cui viene comunemente eseguita, la pipeline di rendering processata dagli shaders definiti secondo le specifiche WebGL all'interno dell'applicazione. L'ordine delle operazioni nell'immagine può essere inteso anche come una regressione del modello dalla rappresentazione complessa visualizzata dall'utente tramite il browser, a quella minima di cui dispone/necessita l'applicazione per poter costruire il modello complesso visualizzato.</p>
+		<table class="figure">
+			<tr>
+				<td class="label top"></td>
+				<td></td>
+				<td class="label top">texture model</td>
+			</tr>
+			<tr>
+				<td class="image"><img src="../img/theory4a.png" /></td>
+				<td class="arrow">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-arrow-right fa-stack-1x"></i>
+					</span>
+				</td>
+				<td class="image"><img src="../img/theory4b.png" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="arrow">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-arrow-down fa-stack-1x"></i>
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="label top">vertex model</td>
+				<td></td>
+				<td class="label top">wireframe model</td>
+			</tr>
+			<tr>
+				<td class="image"><img src="../img/theory4d.png" /></td>
+				<td class="arrow">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-arrow-left fa-stack-1x"></i>
+					</span></td>
+				<td class="image"><img src="../img/theory4c.png" /></td>
+			</tr>
+			<tr>
+				<td colspan="7" class="label bottom"><span class="figure">Figura 4</span>: La pipeline di rendering in ordine inverso.</td>
+			</tr>
+		</table>
+		<p>In questi termini si osserva come ciascuno dei ventisette cubetti che costituiscono il cubo completo può essere considerato come un elemento a sé stante, con le proprie sei facce; ciascuna faccia è un quadrato costruito affiancando due triangoli (poiché in WebGL non esiste una primitiva che consente di disegnare direttamente un quadrato o un poligono di ordine superiore, ma soltanto delle primitive per disegnare triangoli, linee e punti); infine ciascun triangolo è individuato da una terna di punti. Dunque per rappresentare la posizione e l'orientamento di ciascun cubetto sono sufficienti/necessari otto punti o <strong>vertici</strong>.</p>
+		<h2 id="rotation">Rotazioni</h2>
+		<p>Dopo aver osservato quali sono le informazioni disponibili/necessarie per rappresentare ciascuno dei ventisette cubetti (e quindi l'intero cubo), vengono presentati ora i concetti matematici alla base delle rotazioni del cubo e delle facce permesse dall'applicazione.</p>
+		<p>Come visto ciascun cubetto viene rappresentato con una 8-upla di vertici o punti. Ogni punto può essere identificato da una terna di coordinate (x, y, z) che rappresentano ognuna la distanza (lungo la normale) del punto dal piano individuato dagli assi delle altre due coordinate.</p>
+		<p>Al fine di generalizzare le operazioni di rotazione, occorre trovare uno strumento - matematico - che permetta di applicare la trasformazione desiderata ad un punto indipendentemente dalle particolari coordinate di esso.</p>
+		<p>Sia P dunque un qualsiasi punto dello spazio tridimensionale di coordinate (x, y, z) e si ipotizzi di voler applicare a tale punto una rotazione β lungo l'asse z. Si indichi con P' il punto di coordinate (x', y', z') associato a P tramite questa trasformazione. Si osservi la <span class="figure">Figura 5</span>.</p>
+		<table class="figure">
+			<tr>
+				<td class="image"><img src="../img/theory5a.png" /></td>
+				<td class="image"><img src="../img/theory5b.png" /></td>
+			</tr>
+			<tr>
+				<td colspan="7" class="label bottom"><span class="figure">Figura 5</span>: Rotazione di un punto attorno all'asse z.</td>
+			</tr>
+		</table>
+		<p>Innanzitutto, poiché la rotazione avviene attorno all'asse z, la coordinata del punto P' lungo quest'asse corrisponderà a quella del punto P, ossia z' = z.</p>
+		<p>Nella <span class="figure">Figura 5</span>, la variabile r rappresenta la distanza sul piano xy tra l'origine degli assi e il punto P, mentre la variabile α corrisponde all'angolo individuato dall'asse x e la retta congiungente l'origine con il punto P. Queste due grandezze permettono di rappresentare le coordinate x, y del punto P nel modo seguente.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation1.png" /></td>
+				<td class="label"><span class="equation">Equazione 1</span></td>
+			</tr>
+		</table>
+		<p>Similmente, osservando ancora la <span class="figure">Figura 5</span>, le coordinate x', y' del punto P' possono essere rappresentate come segue.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation2.png" /></td>
+			</tr>
+		</table>
+		<p>Applicando a queste ultime due espressioni le note formule goniometriche di addizione e sottrazione, si ottengono le seguenti espressioni.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation3a.png" /></td>
+			</tr>
+		</table>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation3b.png" /></td>
+			</tr>
+		</table>
+		<p>Infine, sostituendo i termini tra parentesi con le corrispondenti coordinate individuate dall'<span class="equation">Equazione 1</span> ed aggiungendo l'espressione della coordinata z' ricava precedentemente, si ottiene il seguente sistema.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation4.png" /></td>
+			</tr>
+		</table>
+		<p>Tale sistema può essere espresso anche in forma vettoriale nel modo seguente.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation5.png" /></td>
+				<td class="label"><span class="equation">Equazione 2</span></td>
+			</tr>
+		</table>
+		<p>La matrice quadrata presente al secondo membro dell'espressione si dice <strong>matrice di trasformazione</strong> - o in questo caso <strong>matrice di rotazione</strong> - e consente di generalizzare le operazione di rotazione lungo l'asse z rispetto al punto (espresso in forma vettoriale) a cui viene applicata.</p>
+		<p>Infine, in modo del tutto analogo, ripercorrendo i passaggi discussi nella definizione della matrice di rotazione lungo l'asse z, è possibile individuare le rispettive matrici di rotazioni lungo gli assi x e y di seguito riportate.</p>
+		<table class="equation">
+			<tr>
+				<td class="equation"><img src="../img/equation6.png" /></td>
+				<td class="equation"><img src="../img/equation7.png" /></td>
+			</tr>
+			<tr>
+				<td class="label bottom">matrice di rotazione attorno all'asse x</td>
+				<td class="label bottom">matrice di rotazione attorno all'asse y</td>
+			</tr>
+		</table>
+		<p>Ricordando che ciascuno dei ventisette cubetti che costituiscono il cubo completo è rappresentato da una 8-upla di vertici, si intuisce facilmente che per applicare una data rotazione ad uno o più cubetti, sarà sufficiente/necessario applicare la rispettiva matrice di rotazione - attraverso un'espressione simile a quella nell'<span class="equation">Equazione 2</span> - a ciascun vertice di ogni cubetto coinvolto nella trasformazione.</p>
+		<h2 id="practically">In pratica</h2>
+		<p>Resta da capire come gli aspetti teorici fin qui discussi vengono messi in pratica nell'applicazione.</p>
+		<p>Innanzitutto occorre discutere in maggior dettaglio a quanto già fatto la struttura dati che conserva le informazioni caratteristiche di ciascun cubetto. All'interno dell'applicazione, per ognuno dei ventisette cubetti vengono memorizzate le seguenti proprietà.</p>
+		<p class="code">
+cubes[t] = {
+    vertexBuffer: initBuffer(vertices, 3, gl.FLOAT),
+    position: { x: i, y: j, z: k },
+    rotationMatrix: (new Matrix4()).setIdentity(),
+    ...
+};
+		</p>
+		<p>I puntini di sospensione indicano la presenza di ulteriori proprietà, tuttavia per non appesantire la spiegazione e per favorire la leggibilità del codice, qui e in seguito vengono riportati soltanto gli elementi di interesse per gli argomenti trattati.</p>
+		<p>I cubetti sono raggruppati nell'array <span class="code">cubes</span> e dunque l'indice t, che può assumere un valore compreso tra 0 e 26, identifica univocamente uno dei ventisette cubetti.</p>
+		<p>La proprietà <span class="code">vertexBuffer</span> conserva l'8-upla di vertici discussa precedentemente che definisce la collocazione del cubetto nello spazio tridimensionale; in questo momento non è importante capire i dettagli di come queste informazioni sono rappresentate secondo le specifiche WebGL.</p>
+		<p>La proprietà <span class="code">position</span> definisce la posizione relativa del cubetto rispetto al cubo completo. Le variabili i, j e k possono assumere esclusivamente i valori -1, 0 e +1. Ad esempio, la proprietà <span class="code">position</span> del cubo vertice che in un dato istante si trova nella posizione FUR assume la seguente terna di valori: <span class="code">{ x: +1, y: +1, z: +1 }</span>. Analogamente, il cubo spigolo che in un dato istante occupa la posizione BL, ha la proprietà <span class="code">position</span> settata come segue: <span class="code">{ x: -1, y: 0, z: -1 }</span>. Questa proprietà conserva un'informazione completamente differente da quella associata alla proprietà <span class="code">vertexBuffer</span>, la quale rappresenta solamente la collocazione nello spazio di ciascun cubetto all'avvio dell'applicazione e il cui valore perciò non muta nel corso dell'esecuzione del programma. Grazie alla proprietà <span class="code">position</span> l'applicazione è in grado di riconoscere ad ogni istante quali sono i cubetti posti su ciascuna faccia indipendentemente dalle trasformazioni già avvenute.</p>
+		<p>Infine la proprietà <span class="code">rotationMatrix</span> conserva l'attuale matrice di rotazione applicata agli otto vertici del cubetto al momento della fase di rendering. Il valore iniziale di questa proprietà è perciò una matrice identità che equivale a nessuna rotazione: il cubo all'avvio dell'applicazione si trova nella sua configurazione di partenza, dove non è stata applicata ancora alcuna rotazione al cubo o alle facce. Per associare questo valore iniziale alla proprietà viene creata una matrice quadrata di dimensione quattro con l'istruzione <span class="code">new Matrix4()</span> e tramite il metodo <span class="code">setIdentity</span> gli elementi di questa matrice vengono settati affinché essa assuma la forma della matrice identità. (Le definizioni della classe Matrix4 e di tutti i suoi metodi si trovano nel file javascript <i>cuon-matrix.js</i> che accompagna il libro WebGL Programming Guide di Kouichi Matsuda e Rodger Lea.) Il perché la matrice abbia dimensione quattro anziché tre è ancora una volta imputabile alle specifiche WebGL, si invita il lettore interessato a approfondire l'argomento su testi specifici come ad esempio quello di Matsuda e Lea (per ulteriori approfondimenti consultare la bibliografia).</p>
+		<p>Se come già osservato la proprietà <span class="code">vertexBuffer</span> si conserva immutata durante tutta l'esecuzione dell'applicazione, ogniqualvolta l'utente esegue un'operazione di rotazione del cubo o di una faccia del cubo occorre aggiornare le proprietà <span class="code">position</span> e <span class="code">rotationMatrix</span> per ciascun cubetto coinvolto nella trasformazione.</p>
+		<p>Le operazioni di aggiornamento delle due proprietà vengono eseguite rispettivamente dalle funzioni <span class="code">updatePosition</span> e <span class="code">updateRotationMatrix</span>, per ognuna delle quali viene di seguito riportato il codice e una breve spiegazione.</p>
+		<p>Entrambe le funzioni ricevono tre parametri in ingresso, ovvero</p>
+		<ul>
+			<li><span class="code">cube</span>, che contiene un riferimento al cubetto al quale viene applicata la rotazione</li>
+			<li><span class="code">angle</span>, che contiene l'angolo di rotazione espresso in gradi</li>
+			<li><span class="code">axis</span>, che contiene un valore numerico che identifica l'asse attorno al quale avviene la rotazione</li>
+		</ul>
+		<p>Si noti che nell'applicazione vengono usati dei valori numerici costanti associati a nomi simbolici per indicare i tre assi cartesiani e le facce del cubo, ed in particolare si ha che <span class="code">axisX = faceR</span>, <span class="code">axisY = faceU</span> e <span class="code">axisZ = faceF</span>. Inoltri si osservi come le rotazioni delle facce Right e Left avvengono entrambe attorno l'asse x, così come le rotazioni delle facce Up e Down avvengono entrambe attorno l'asse y e le rotazioni delle facce Front e Back avvengono entrambe attorno l'asse z. Con questi accorgimenti è possibile raggruppare in pochi casi tutte le possibili rotazioni determinate dalle combinazioni dei parametri <span class="code">angle</span> e <span class="code">axis</span>.</p>
+		<p class="code">
+function updatePosition(cube, angle, axis) {
+    switch (axis) {
+        // x-axis
+        case faceR:
+        case faceL:
+            if (angle > 0) {
+                var tmp = cube.position.y;
+                cube.position.y = -cube.position.z;
+                cube.position.z = +tmp;
+            } else {
+                var tmp = cube.position.y;
+                cube.position.y = +cube.position.z;
+                cube.position.z = -tmp;
+            }
+            break;
+        // y-axis
+        case faceU:
+        case faceD:
+            if (angle > 0) {
+                var tmp = cube.position.x;
+                cube.position.x = +cube.position.z;
+                cube.position.z = -tmp;
+            } else {
+                var tmp = cube.position.x;
+                cube.position.x = -cube.position.z;
+                cube.position.z = +tmp;
+            }
+            break;
+        // z-axis
+        case faceF:
+        case faceB:
+            if (angle > 0) {
+                var tmp = cube.position.x;
+                cube.position.x = -cube.position.y;
+                cube.position.y = +tmp;
+            } else {
+                var tmp = cube.position.x;
+                cube.position.x = +cube.position.y;
+                cube.position.y = -tmp;
+            }
+            break;
+    }
+}
+		</p>
+		<p>La funzione <span class="code">updatePosition</span> corregge la posizione relativa del cubetto rispetto al cubo completo. Qualsiasi trasformazione modifica due coordinate su tre, lasciando immutata la coordinata associata all'asse attorno al quale avviene la rotazione. Ad esempio, supponendo di applicare una rotazione di 90° in senso antiorario alla faccia frontale, il cubetto che prima della rotazione si trova nella posizione FUR verrà spostato nella posizione FUL. Poiché la rotazione avviene attorno all'asse z, la coordinata z rimane inalterata e perciò non occorre aggiornarla. Mentre i valori delle rimanenti coordinate verranno scambiati nel modo seguente: la coordinata y assumerà il valore della coordinata x e la coordinata x assumerà il valore della coordinata y cambiato di segno. La <span class="table">Tabella 1</span> schematizza le modifiche apportate dalla funzione <span class="code">updatePosition</span> in base all'asse e al verso della rotazione.</p>
+		<table class="update-position">
+			<caption><span class="table">Tabella 1</span>: Aggiornamento della posizione di un cubetto dopo una qualsiasi rotazione.</caption>
+			<tr class="label">
+				<td>asse</td>
+				<td>verso</td>
+				<td>posizione prima</td>
+				<td>posizione dopo</td>
+			</tr>
+			<tr class="axis">
+				<td rowspan="2">x-axis</td>
+				<td><i class="fa fa-rotate-left"></i></td>
+				<td>(i, j, k)</td>
+				<td>(i, -k, +j)</td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-rotate-right"></i></td>
+				<td>(i, j, k)</td>
+				<td>(i, +k, -j)</td>
+			</tr>
+			<tr class="axis">
+				<td rowspan="2">y-axis</td>
+				<td><i class="fa fa-rotate-left"></i></td>
+				<td>(i, j, k)</td>
+				<td>(+k, j, -i)</td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-rotate-right"></i></td>
+				<td>(i, j, k)</td>
+				<td>(-k, j, +i)</td>
+			</tr>
+			<tr class="axis">
+				<td rowspan="2">z-axis</td>
+				<td><i class="fa fa-rotate-left"></i></td>
+				<td>(i, j, k)</td>
+				<td>(-j, +i, k)</td>
+			</tr>
+			<tr>
+				<td><i class="fa fa-rotate-right"></i></td>
+				<td>(i, j, k)</td>
+				<td>(+j, -i, k)</td>
+			</tr>
+		</table>
+		<p>Si ricorda che le coordinate della proprietà position di ciascun cubetto possono assumere esclusivamente i valori -1, 0, +1.</p>
+		<p class="code">
+function updateRotationMatrix(cube, angle, axis) {
+    var rotationMatrix = new Matrix4();
+    switch (axis) {
+        // x-axis
+        case faceR:
+        case faceL:
+            rotationMatrix.setRotate(angle, 1, 0, 0);
+            break;
+        // y-axis
+        case faceU:
+        case faceD:
+            rotationMatrix.setRotate(angle, 0, 1, 0);
+            break;
+        // z-axis
+        case faceF:
+        case faceB:
+            rotationMatrix.setRotate(angle, 0, 0, 1);
+            break;
+    }
+    cube.rotationMatrix = rotationMatrix.multiply(cube.rotationMatrix);
+}
+		</p>
+		<p>La funzione <span class="code">updateRotationMatrix</span> costruisce la matrice di rotazione che realizza la trasformazione desiderata, ne calcola il prodotto con la matrice di rotazione (proprietà <span class="code">rotationMatrix</span>) del cubetto in esame e memorizza il risultato come nuova matrice di rotazione del cubetto. I metodi <span class="code">setRotate</span> e <span class="code">multiply</span> della classe Matrix4 sono definiti anch'essi nel file javascript <i>cuon-matrix.js</i> (per ulteriori informazioni si veda Matsuda e Lea nei riferimenti bibliografici a fondo pagina). Il metodo <span class="code">setRotate</span> trasforma la matrice a cui è applicato in una matrice di rotazione, i quattro parametri richiesti dal metodo specificano l'angolo in gradi di rotazione e l'asse attorno al quale avviene la rotazione. Il metodo <span class="code">multiply</span> calcola il prodotto tra la matrice a cui è applicato e la matrice passata come parametro (ossia <span class="code">A.multiply(B) = A * B</span>) e restituisce il risultato di tale operazione.</p>
+		<p>Dunque ogniqualvolta l'utente applica una rotazione al cubo o a una delle sei facce, l'applicazione chiama le funzioni <span class="code">updatePosition</span> e <span class="code">updateRotationMatrix</span> per ciascun cubetto coinvolto nella trasformazione. In questo modo l'applicazione raggiunge due obiettivi fondamentali per il suo corretto funzionamento.</p>
+		<ul>
+			<li>Renderizza ognuno dei ventisette cubetti nella posizione spaziale attesa applicando la rispettiva matrice di rotazione (proprietà <span class="code">rotationMatrix</span>) a ciascuno degli otto vertici che definiscono la collocazione spaziale iniziale del cubetto (proprietà <span class="code">vertexBuffer</span>).</li>
+			<li>Ad ogni istante individua correttamente i nove cubetti coinvolti nelle rotazioni di ciascuna delle sei facce del cubo.</li>
+		</ul>
+		<h2 id="solver">Algoritmo Risolutivo</h2>
+		<p>In questo ultimo paragrafo verrà descritto brevemente il metodo risolutivo applicato dall'applicazione per riportare il cubo alla sua configurazione standard, ovvero quella in cui le sei facce del cubo sono tutte monocolori.</p>
+		<p>Come anticipato in precedenza l'applicazione non mette in pratica l'algoritmo descritto da Warusfel nella sua opera dedicata al cubo (per ulteriori informazioni si consulti la bibliografia a fondo pagina), ma applica in realtà un algoritmo (se così può essere definito) molto ingenuo. L'applicazione memorizza l'intera sequenza delle rotazioni applicate al cubo e a ciascuna delle sei facce e quando l'utente preme sul pulsante solve, inverte ognuna trasformazione nella sequenza registrata e applica al cubo la sequenza invertita al rovescio, cioè partendo dall'inversa dell'ultima trasformazione eseguita fino a giungere all'inversa della prima trasformazione eseguita.</p>
+		<p>Il concetto di <strong>trasformazione inversa</strong> è immediato se applicato ad un esempio. Si supponga di ruotare ancora la faccia frontale del cubo di 90° in senso antiorario. Se a tale trasformazione si fa seguire immediatamente - cioè senza interporre ulteriori trasformazioni del cubo o delle sei facce - una rotazione di 90° in senso orario della faccia frontale, il cubo viene riportato nella configurazione in cui si trovava nell'istante precedente alla prima rotazione (quella in senso antiorario). In altre parole è come se le due rotazioni successive a quell'istante non fossero mai avvenute. Una coppia di trasformazioni che non altera la configurazione del cubo - come quella dell'esempio - si dice <strong>trasformazione identità</strong> (oppure semplicemente <strong>identità</strong>). Le trasformazioni che compongono una identità sono l'una l'inversa dell'altra. Perciò, considerando ancora l'esempio precedente, la seconda rotazione (quella in senso orario) è l'inversa della prima (quella in senso antiorario), ma anche la prima è l'inversa della seconda.</p>
+		<p>Prima di guardare nel dettaglio il codice del metodo risolutivo applicato dall'applicazione è necessario allargare la nomenclatura introdotta all'inizio di questa sessione, attingendo ancora - seppur sempre con qualche differenza - da quella utilizzata da Warusfel (per maggiori dettagli si consulti la bibliografia). Le rotazioni del cubo attorno agli assi cartesiani del sistema di riferimento sono indicate dalle medesime lettere che danno nome agli assi. Perciò si scriverà "x" per indicare una rotazione del cubo di 90° in senso antiorario attorno all'asse x e analogamente si scriverà "y" e "z" per indicare una rotazione del cubo di 90° in senso antiorario rispettivamente attorno all'asse y e attorno all'asse z. Le rotazioni in senso orario sono indicate dalle medesime lettere ma in maiuscolo. Perciò si scriverà "X" per indicare una rotazione del cubo di 90° in senso orario attorno all'asse x e analogamente si scriverà "Y" e "Z" per indicare una rotazione del cubo di 90° in senso orario rispettivamente attorno all'asse y e attorno all'asse z. Si utilizzerà la stessa convenzione anche per le rotazioni delle sei facce del cubo. Dunque, ad esempio, si scriverà "r" e "R" per indicare una rotazione di 90° rispettivamente in senso antiorario e in senso orario della faccia destra del cubo.</p>
+		<p>L'algoritmo risolutivo diventa leggermente meno ingenuo se si applicano in successione le seguenti tecniche di scrematura della sequenza di trasformazioni memorizzata.</p>
+		<ol>
+			<li>Normalizzazione della sequenza rispetto alle rotazioni del cubo attorno agli assi cartesiani del sistema di riferimento.</li>
+			<li>Eliminazione di tutte le identità presenti nella sequenza.</li>
+			<li>Sostituzione di tutte le sottosequenze di lunghezza tre in cui è presente una sola trasformazione ripetuta tre volte con un'unica trasformazione inversa a quella ripetuta, ad esempio la sottosequenza "rrr" viene sostituita dalla rotazione "R".</li>
+		</ol>
+		<p>Viene infine presentato il codice completo del metodo risolutivo utilizzato dall'applicazione.</p>
+		<p class="code">
+function naiveSolver() {
+    if (stack.length == 0) return;
+
+    // 1st step: normalize with respect to the cube rotations along axes x, y, z
+
+    var dict = {
+        x: { r: "r", u: "f", f: "d", b: "u", d: "b", l: "l" },
+        X: { r: "r", u: "b", f: "u", b: "d", d: "f", l: "l" },
+        y: { r: "b", u: "u", f: "r", b: "l", d: "d", l: "f" },
+        Y: { r: "f", u: "u", f: "l", b: "r", d: "d", l: "b" },
+        z: { r: "u", u: "l", f: "f", b: "b", d: "r", l: "d" },
+        Z: { r: "d", u: "r", f: "f", b: "b", d: "l", l: "u" }
+    };
+
+    for (var i = 0; i < stack.length; i++) {
+        if ("xyz".includes(stack[i].toLowerCase())) {
+            var key = stack.splice(i--, 1);
+            for (var j = 0; j <= i; j++) {
+                if (isLowerCase(stack[j])) {
+                    stack[j] = dict[key][stack[j]];
+                } else {
+                    stack[j] = dict[key][stack[j].toLowerCase()].toUpperCase();
+                }
+            }
+        }
+    }
+
+    // 2nd step: eliminate all the identities
+
+    var flag = true;
+    while (flag) {
+        flag = false;
+        for (var i = 0; i < stack.length-1; i++) {
+            if (stack[i] == swapCase(stack[i+1])) {
+                stack.splice(i--, 2);
+                flag = true;
+            }
+        }
+    }
+    
+    // 3rd step: replace the sets of three moves equal with a single reverse move
+
+    if (stack.length >= 3) {
+        var flag = true;
+        while (flag) {
+            flag = false;
+            for (var i = 0; i < stack.length-2; i++) {
+                if ((stack[i] == stack[i+1]) && (stack[i+1] == stack[i+2])) {
+                    stack.splice(i, 3, swapCase(stack[i--]));
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    if (stack.length == 0) return;
+
+    var generator = reverseGenerator(stack.join(""));
+    solver = true;
+    executeGenerator(generator);
+}
+		</p>
+		<p>I tre accorgimenti applicati dal metodo risolutivo utilizzato dall'applicazione garantiscono che la sequenza di trasformazioni generata dalla funzione <span class="code">naiveSolver</span> (che riporta il cubo alla sua configurazione standard) ha una lunghezza minore o al più uguale a quella ottenuta invertendo semplicemente le trasformazioni memorizzate.</p>
+		<h2 id="bibliography">Bibliografia</h2>
+		<p>Il progetto qui presentato non sarebbe stato lo stesso e forse non avrebbe nemmeno visto la luce senza il fondamentale contributo fornito dalle seguenti opere.</p>
+		<ul>
+			<li><strong>Il Cubo di Rubik</strong> (titolo originale: Réussir le Rubik's Cube) di André Warusfel (1981)</li>
+			<li><strong>WebGL Programming Guide</strong> di Kouichi Matsuda e Rodger Lea (2013)</li>
+		</ul>
+	</div>
+</body>
+</html>

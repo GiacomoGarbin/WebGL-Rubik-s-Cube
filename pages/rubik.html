@@ -1,0 +1,231 @@
+<html>
+<head>
+	<title>Rubik's Cube | Application</title>
+	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/ui.css">
+	<script src="../js/cuon-matrix.js"></script>
+	<script src="../js/cuon-utils.js"></script>
+	<script src="../js/webgl-debug.js"></script>
+	<script src="../js/webgl-utils.js"></script>
+	<script src="../js/rubik.js"></script>
+	<script src="../js/ui.js"></script>
+</head>
+<body onload="init()">
+	<div id="control-panel">
+		<table class="frame">
+			<tr>
+				<td colspan="3" class="header">
+					<table class="project">
+						<tr class="row1">
+							<td><i class="fa fa-cube"></i>Rubik's Cube</td>
+						</tr>
+						<tr class="row2">
+							<td>
+								<span class="normal">by</span> Giacomo Garbin
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="pages">
+				<td colspan="3">
+					<table class="button-group">
+						<tr>
+							<td>
+								<a href="./theory.html" class="button" target="_blank">
+									<div class="button theory">Theory</div>
+								</a>
+							</td>
+							<td>
+								<a href="./manual.html" class="button" target="_blank">
+									<div class="button user-manual">User Manual</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" class="button">
+					<div class="button shuffle">Reset & Shuffle</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">x-axis</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left x-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right x-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">y-axis</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left y-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right y-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">z-axis</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left z-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right z-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Right</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left x-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right x-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Up</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left y-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right y-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Front</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left z-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right z-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Left</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left x-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right x-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Down</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left y-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right y-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="grid">
+					<table class="rotate-group">
+						<tr>
+							<td colspan="2" class="caption">Back</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="button rotate-left z-axis"><i class="fa fa-rotate-left"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td>
+								<div class="button rotate-right z-axis"><i class="fa fa-rotate-right"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<table class="generator-group">
+						<tr>
+							<td colspan="3" class="caption">Generator</td>
+						</tr>
+						<tr>
+							<td><input type="text" class="input-text"></td>
+							<td class="button">
+								<div class="button play"><i class="fa fa-play"></i>&NegativeMediumSpace;</div>
+							</td>
+							<td class="button">
+								<div class="button reverse"><i class="fa fa-refresh"></i>&NegativeMediumSpace;</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="solve">
+				<td colspan="3">
+					<table class="button-group">
+						<tr>
+							<td><div class="button reset">Reset</div></td>
+							<td><div class="button solve">Solve</div></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" class="footer">
+					<a href="../index.html" target="_blank"><i class="fa fa-arrow-left"></i> back to Index</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<canvas id="webgl" width="400" height="400"></canvas>
+</body>
+</html>

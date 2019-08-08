@@ -1,0 +1,613 @@
+﻿@font-face {
+	font-family: Roboto;
+	src: url(../fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Roboto Mono';
+	src: url(../fonts/RobotoMono-Regular.ttf);
+}
+
+/* index */
+
+#container {
+	width: 600px;
+	height: 600px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -300px;
+	margin-left: -300px;
+}
+
+	#container table.frame {
+		width: 100%;
+		height: 100%;
+		border-collapse: collapse;
+		font-family: 'Roboto', sans-serif;
+		font-size: 16px;
+		color: #212121;
+	}
+
+		#container table.frame td {
+			width: 33%;
+			height: 33%;
+			padding: 0;
+		}
+
+			#container table.frame td a {
+				text-decoration: none;
+			}
+
+			#container table.frame td div {
+				width: 190px;
+				height: 190px;
+				margin: 0 auto;
+				border-radius: 10px;
+				text-align: center;
+				line-height: 190px;
+				font-size: 20px;
+				color: white;
+			}
+
+				#container table.frame td div.big {
+					width: 390px;
+					height: 390px;
+					line-height: normal;
+					color: #212121;
+				}
+
+					#container table.frame td div.big table {
+						width: 100%;
+						height: 100%;
+						border-collapse: collapse;
+					}
+
+						#container table.frame td div.big table td {
+							height: 25%;
+							padding: 0;
+							text-align: right;
+						}
+
+						#container table.frame td div.big table tr.row1 {
+							font-size: 20px;
+							vertical-align: bottom;
+						}
+
+						#container table.frame td div.big table tr.row2 {
+							font-size: 56px;
+							vertical-align: middle;
+						}
+
+						#container table.frame td div.big table tr.row3 {
+							font-size: 30px;
+							vertical-align: middle;
+						}
+
+						#container table.frame td div.big table tr.row4 {
+							font-size: 30px;
+							vertical-align: top;
+						}
+
+						#container table.frame td div.big table td span.normal {
+							font-size: 16px;
+						}
+
+				#container table.frame td div.red {
+					background-color: #ba0c2f;
+					cursor: pointer;
+				}
+
+				#container table.frame td div.green {
+					background-color: #009a44;
+					cursor: pointer;
+				}
+
+				#container table.frame td div.blue {
+					background-color: #003da5;
+					cursor: pointer;
+				}
+
+				#container table.frame td div.yellow {
+					background-color: #ffd700;
+				}
+
+				#container table.frame td div.orange {
+					background-color: #fe5000;
+				}
+
+				#container table.frame td div.white {
+					background-color: #ffffff;
+				}
+
+				#container table.frame td div.red:hover,
+				#container table.frame td div.green:hover,
+				#container table.frame td div.blue:hover {
+					box-shadow: 0 0 4px 1px #757575;
+				}
+
+/* control panel */
+
+#control-panel {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	width: 310px;
+	padding: 5px 0;
+}
+
+	#control-panel table.frame {
+		width: 300px;
+		margin: auto;
+		border-collapse: collapse;
+		font-family: 'Roboto', sans-serif;
+		font-size: 16px;
+		color: #212121;
+	}
+
+		#control-panel table.frame td {
+			padding: 0;
+		}
+
+			#control-panel table.frame td.title {
+				padding: 5px;
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+
+				#control-panel table.frame td.title div {
+					text-align: center;
+					height: 40px;
+					line-height: 40px;
+					border-radius: 4px;
+					background-color: #424242;
+					color: white;
+				}
+
+			#control-panel table.frame td.grid {
+				width: 100px;
+				padding: 10px 0;
+			}
+
+			#control-panel table.frame td.button {
+				padding: 5px;
+			}
+
+				#control-panel table.frame td.button div.button {
+					height: 40px;
+					line-height: 40px;
+					border-radius: 4px;
+				}
+
+		#control-panel table.frame .button-group {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+			#control-panel table.frame .button-group td {
+				width: 50%;
+				padding: 5px;
+			}
+
+				#control-panel table.frame .button-group td div.button {
+					height: 40px;
+					line-height: 40px;
+					border-radius: 4px;
+				}
+
+		#control-panel table.frame tr.pages td {
+			padding-bottom: 10px;
+		}
+
+		#control-panel table.frame .rotate-group {
+			width: 100%;
+			border-collapse: collapse;
+			text-align: center;
+		}
+
+			#control-panel table.frame .rotate-group td.caption {
+				padding-bottom: 5px;
+			}
+
+			#control-panel table.frame .rotate-group td div.button {
+				width: 40px;
+				height: 40px;
+				line-height: 40px;
+				margin: auto;
+				border-radius: 4px;
+			}
+
+			#control-panel table.frame .rotate-group td div.rotate-left {
+				margin-right: 2.5px;
+			}
+
+			#control-panel table.frame .rotate-group td div.rotate-right {
+				margin-left: 2.5px;
+			}
+
+		#control-panel table.frame .generator-group {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 10px;
+		}
+
+			#control-panel table.frame .generator-group td {
+				padding: 5px;
+			}
+
+				#control-panel table.frame .generator-group td input {
+					width: 100%;
+					height: 30px;
+					font-family: 'Roboto Mono', monospace;
+					font-size: 12px;
+				}
+
+				#control-panel table.frame .generator-group td.button {
+					width: 30px;
+					padding-left: 0;
+				}
+
+				#control-panel table.frame .generator-group td div.button {
+					width: 30px;
+					height: 30px;
+					line-height: 30px;
+					margin: 0;
+					border-radius: 3px;
+				}
+
+		#control-panel table.frame td.header,
+		#control-panel table.frame td.footer {
+			padding: 5px;
+		}
+
+		#control-panel table.frame td.footer {
+			text-align: right;
+		}
+
+			#control-panel table.frame td.footer a {
+				text-decoration: none;
+				color: #9E9E9E;
+			}
+
+				#control-panel table.frame td.footer a:hover {
+					color: #212121;
+				}
+
+		#control-panel table.frame tr.solve td {
+			padding-bottom: 10px;
+		}
+
+	#control-panel div.button {
+		cursor: pointer;
+		background-color: #424242;
+		color: white;
+		text-align: center;
+	}
+
+		#control-panel div.button.theory {
+			background-color: #ba0c2f;
+			color: white;
+		}
+
+		#control-panel div.button.user-manual {
+			background-color: #003da5;
+			color: white;
+		}
+
+		#control-panel div.button.application {
+			background-color: #009a44;
+			color: white;
+		}
+
+	#control-panel a.button {
+		text-decoration: none;
+	}
+
+	#control-panel div.button:hover {
+		box-shadow: 0 0 2px 1px #757575;
+	}
+
+	#control-panel table.project {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+
+		#control-panel table.project td {
+			border-left: none;
+			border-right: none;
+		}
+
+		#control-panel table.project tr.row1 {
+			font-size: 34px;
+		}
+
+			#control-panel table.project tr.row1 i {
+				margin-right: 10px;
+			}
+
+		#control-panel table.project tr.row2 {
+			font-size: 20px;
+		}
+
+			#control-panel table.project tr.row2 td {
+				padding-top: 5px;
+			}
+
+		#control-panel table.project span.normal {
+			font-size: 16px;
+		}
+
+	#control-panel table.frame td.index {
+		padding-bottom: 20px;
+	}
+
+	#control-panel table.frame ul.index {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+
+		#control-panel table.frame ul.index li {
+			margin-top: 5px;
+			padding: 2px 0;
+		}
+
+			#control-panel table.frame ul.index li a {
+				text-decoration: none;
+				background-color: #F5F5F5;
+				color: #212121;
+				padding: 2px 10px;
+				border-radius: 4px;
+			}
+
+				#control-panel table.frame ul.index li a:hover {
+					background-color: #424242;
+					color: white;
+					box-shadow: 0 0 2px 1px #757575;
+				}
+
+				#control-panel table.frame ul.index li a i {
+					font-size: 8px;
+					vertical-align: middle;
+					margin-right: 5px;
+				}
+
+/* canvas */
+
+#webgl {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px;
+	margin-left: -200px;
+}
+
+/* text container */
+
+#textContainer {
+	width: 680px;
+	margin: 40px auto;
+	margin-left: 380px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	color: #212121;
+	text-align: justify;
+}
+
+	#textContainer h2 {
+		margin-top: 40px;
+		margin-bottom: 10px;
+	}
+
+	#textContainer p {
+		margin: 10px auto;
+	}
+
+	#textContainer a {
+		color: #003da5;
+	}
+
+		#textContainer a.button {
+			padding: 1px 5px;
+			background-color: #E0E0E0;
+			border-radius: 4px;
+			text-decoration: none;
+			color: white;
+			font-size: 14px;
+		}
+
+			#textContainer a.button.theory {
+				background-color: #ba0c2f;
+			}
+
+			#textContainer a.button.user-manual {
+				background-color: #003da5;
+			}
+
+			#textContainer a.button.application {
+				background-color: #009a44;
+			}
+
+			#textContainer a.button:hover {
+				box-shadow: 0 0 2px 1px #BDBDBD;
+			}
+
+	#textContainer span.figure {
+		padding: 1px 5px;
+		background-color: #424242;
+		color: white;
+		font-size: 14px;
+		border-radius: 4px;
+	}
+
+	#textContainer span.equation {
+		padding: 1px 5px;
+		background-color: #424242;
+		color: white;
+		font-size: 14px;
+		border-radius: 4px;
+	}
+
+	#textContainer table.figure {
+		border-collapse: collapse;
+		margin: 15px auto;
+	}
+
+		#textContainer table.figure td {
+			padding: 0 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+			#textContainer table.figure td.label.top {
+				padding-bottom: 10px;
+			}
+
+			#textContainer table.figure td.label.bottom {
+				padding-top: 10px;
+			}
+
+			#textContainer table.figure td.arrow {
+				padding: 10px;
+			}
+
+				#textContainer table.figure td.arrow i.fa-square {
+					color: #424242;
+				}
+
+				#textContainer table.figure td.arrow i.fa-arrow-right,
+				#textContainer table.figure td.arrow i.fa-arrow-down,
+				#textContainer table.figure td.arrow i.fa-arrow-left {
+					color: white;
+				}
+
+			#textContainer table.figure td.image img {
+				width: 200px;
+			}
+
+	#textContainer table.equation {
+		border-collapse: collapse;
+		margin: 15px auto;
+	}
+
+		#textContainer table.equation td {
+			padding: 0 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+			#textContainer table.equation td.label.top {
+				padding-bottom: 10px;
+			}
+
+			#textContainer table.equation td.label.bottom {
+				padding-top: 10px;
+			}
+
+	#textContainer p.code {
+		font-family: 'Roboto Mono', monospace;
+		font-size: 12px;
+		white-space: pre-wrap;
+		background-color: #F5F5F5;
+		padding: 0 10px;
+		border-radius: 4px;
+	}
+
+	#textContainer span.code {
+		font-family: 'Roboto Mono', monospace;
+		font-size: 12px;
+		background-color: #F5F5F5;
+		padding: 0 2px;
+		border-radius: 4px;
+	}
+
+	#textContainer ul,
+	#textContainer ol {
+		margin-top: -5px;
+		margin-bottom: 15px;
+		padding-left: 30px;
+	}
+
+	#textContainer ul {
+		list-style-type: square;
+	}
+
+		#textContainer ul li,
+		#textContainer ol li {
+			margin-top: 5px;
+		}
+
+	#textContainer table.update-position {
+		width: 100%;
+		margin: 15px 0;
+		font-family: 'Roboto Mono', monospace;
+		font-size: 12px;
+	}
+
+		#textContainer table.update-position tbody {
+			display: table;
+			border: solid #424242 1px;
+			border-collapse: collapse;
+			margin: 0 auto;
+		}
+
+		#textContainer table.update-position caption {
+			caption-side: bottom;
+			padding-top: 10px;
+			font-family: 'Roboto', sans-serif;
+			font-size: 16px;
+			white-space: nowrap;
+		}
+
+		#textContainer table.update-position td {
+			padding: 5px 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		#textContainer table.update-position tr.label {
+			font-family: 'Roboto', sans-serif;
+			font-size: 16px;
+			background-color: #424242;
+			color: white;
+		}
+
+		#textContainer table.update-position tr.axis {
+			border-top: solid #424242 1px;
+		}
+
+	#textContainer span.table {
+		padding: 1px 5px;
+		background-color: #424242;
+		color: white;
+		font-size: 14px;
+		border-radius: 4px;
+	}
+
+	#textContainer span.button {
+		padding: 1px 5px;
+		background-color: #424242;
+		color: white;
+		font-size: 14px;
+		border-radius: 2px;
+	}
+
+	#textContainer span.key {
+		padding: 2px 7px;
+		background-color: #424242;
+		border-radius: 2px;
+		font-family: 'Roboto Mono', monospace;
+		font-size: 12px;
+		color: white;
+	}
+
+	#textContainer ul.generators span.generator {
+		margin-left: 10px;
+		font-family: 'Roboto Mono', monospace;
+		font-size: 14px;
+		background-color: #F5F5F5;
+		padding: 1px 5px;
+		border-radius: 4px;
+	}

@@ -1,0 +1,122 @@
+﻿<html>
+<head>
+	<title>Rubik's Cube | User Manual</title>
+	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/ui.css">
+</head>
+<body>
+	<div id="control-panel">
+		<table class="frame">
+			<tr>
+				<td class="header">
+					<table class="project">
+						<tr class="row1">
+							<td><i class="fa fa-cube"></i>Il Cubo di Rubik</td>
+						</tr>
+						<tr class="row2">
+							<td>
+								<span class="normal">di</span> Giacomo Garbin
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table class="button-group">
+						<tr>
+							<td>
+								<a href="./theory.html" class="button">
+									<div class="button theory">Theory</div>
+								</a>
+							</td>
+							<td>
+								<a href="./rubik.html" class="button">
+									<div class="button application">Application</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="title"><div>User Manual</div></td>
+			</tr>
+			<tr>
+				<td class="footer">
+					<a href="../index.html"><i class="fa fa-arrow-left"></i> back to Index</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="textContainer" class="user-manual">
+		<p>All'avvio dell'applicazione il cubo si presenta nella <strong>configurazione standard</strong> (quella in cui le sei facce del cubo sono tutte monocolori) e orientato in modo che la faccia a destra corrisponde alla faccia blu, la faccia in alto corrisponde alla faccia bianca, la faccia frontale corrisponde alla faccia rossa, la faccia posteriore corrisponde alla faccia arancione, la faccia in basso corrisponde alla faccia gialla e la faccia a sinistra corrisponde dalla faccia verde.</p>
+		<p>Premendo sul pulsante <span class="button">Reset & Shuffle</span> il cubo viene riportato istantaneamente nella configurazione standard e all'orientamento iniziale, dopodiché l'applicazione mescola il cubo applicando venti rotazioni casuali alle facce. La fase di ripristino non viene applicata quando il cubo si trova già nella configurazione standard.</p>
+		<p>L'utente può ruotare il cubo e le sei facce attorno agli assi x, y e z premendo sui pulsanti <span class="button"><i class="fa fa-rotate-left"></i></span> e <span class="button"><i class="fa fa-rotate-right"></i></span>, i quali applicano una rotazione di 90° (un quarto di giro) rispettivamente in senso antiorario e in senso orario.</p>
+		<p>Gli stessi movimenti possono essere anche eseguiti tramite le seguenti <strong>scorciatoie da tastiera</strong>.</p>
+		<ul>
+			<li>premere <span class="key">X</span> per ruotare il cubo attorno all'asse x di 90° in senso antiorario</li>
+			<li>premere <span class="key">Y</span> per ruotare il cubo attorno all'asse y di 90° in senso antiorario</li>
+			<li>premere <span class="key">Z</span> per ruotare il cubo attorno all'asse z di 90° in senso antiorario</li>
+			<li>premere <span class="key">R</span> per ruotare la faccia a destra di 90° in senso antiorario</li>
+			<li>premere <span class="key">U</span> per ruotare la faccia in alto di 90° in senso antiorario</li>
+			<li>premere <span class="key">F</span> per ruotare la faccia frontale di 90° in senso antiorario</li>
+			<li>premere <span class="key">B</span> per ruotare la faccia posteriore di 90° in senso antiorario</li>
+			<li>premere <span class="key">D</span> per ruotare la faccia in basso  di 90° in senso antiorario</li>
+			<li>premere <span class="key">L</span> per ruotare la faccia a sinistra di 90° in senso antiorario</li>
+			<li>premere <span class="key">SHIFT</span> assieme ad uno dei tasti precedenti per realizzare la medesima rotazione ma in senso orario</li>
+		</ul>
+		<p>L'utente può inoltre interagire con il cubo inserendo una sequenza di rotazioni (detta <strong>generatore</strong>) nell'apposita casella di testo e premere sul pulsante <span class="button"><i class="fa fa-play"></i></span> per far eseguire i movimenti in ordine uno dopo l'altro all'applicazione. Premendo sul pulsante <span class="button"><i class="fa fa-refresh"></i></span> il generatore presente nella casella di testo viene invertito. Un generatore può essere formato da una qualsiasi sequenza dei caratteri minuscoli "x", "y", "z", "r", "u", "f", "b", "d" e "l" per le rotazioni in senso antiorario e dei relativi caratteri maiuscoli per le rotazioni in senso orario. Un generatore non può contenere un carattere diverso da quelli elencati. Se un generatore contiene uno o più caratteri non validi, la sequenza non può essere eseguita né tanto meno invertita.</p>
+		<p>Di seguito viene riportato un elenco di generatori che realizzano delle configurazioni particolari tratti dall'opera Il Cubo di Rubik di André Warusfel (per maggiori dettagli si consulti la bibliografia alla pagina <a href="./theory.html" class="button theory">Theory</a>). Ciascun generatore deve essere applicato a partire dal cubo nella configurazione standard.</p>
+		<ul class="generators">
+			<li>
+				<strong>Scacchiera</strong>
+				<span class="generator">FFBBRRLLUUDD</span>
+			</li>
+			<li>
+				<strong>Diagonale</strong><span class="generator">FBRLFBRLFBRL</span>
+			</li>
+			<li>
+				<strong>Fregio</strong><span class="generator">FBRLFBRLFBRLUUDD</span>
+			</li>
+			<li>
+				<strong>Confezione Regalo</strong><span class="generator">RFFBBRRLLUUFFBBRRLLDDr</span>
+			</li>
+			<li>
+				<strong>Uovo al Tegamino</strong>
+				<span class="generator">RlffrrllbbLr</span>
+			</li>
+			<li>
+				<strong>Sei Quadrati</strong>
+				<span class="generator">RlFbUdRl</span>
+			</li>
+			<li>
+				<strong>Esagono</strong>
+				<span class="generator">DRFFrfdrDDRFFDRRdrfdFFDR</span>
+			</li>
+			<li>
+				<strong>Bandiera</strong>
+				<span class="generator">RRFDRRdRBBrDRRdfRRLLBDLLdLFFlDLLdbLLFFRRLLBBR</span>
+			</li>
+			<li>
+				<strong>Doppio Cubo</strong>
+				<span class="generator">fRUUruBUUbUFBlDDLDfDDFdb</span>
+			</li>
+			<li>
+				<strong>Triplo Cubo</strong>
+				<span class="generator">fRUUruBUUbUFBlDDLDfDDFdbLLfUbulbLFlBLUBuLL</span>
+			</li>
+			<li>
+				<strong>Serpente</strong>
+				<span class="generator">BRldRRDLrbRRUBBuDRRd</span>
+			</li>
+			<li>
+				<strong>Lombrico</strong>
+				<span class="generator">RUFFdRlFbdfrFFRUUFRRfrufUUFR</span>
+			</li>
+		</ul>
+		<p>Premendo sul pulsante <span class="button">Reset</span> il cubo viene riportato istantaneamente nella configurazione standard e all'orientamento iniziale. Quando il cubo si trova già nella configurazione standard, la pressione del pulsante <span class="button">Reset</span> non ha alcun effetto sul cubo.</p>
+		<p>Infine premendo sul pulsante <span class="button">Solve</span> il cubo viene riportato nella configurazione standard tramite una sequenza di rotazioni delle facce calcolata dall'applicazione.</p>
+	</div>
+</body>
+</html>
